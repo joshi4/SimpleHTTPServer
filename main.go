@@ -48,7 +48,7 @@ func main() {
 	}
 
 	http.HandleFunc("/", makeHandler(simpleHandler))
-	fmt.Printf("Starting SimpleGoServer on port %s\n", port)
+	fmt.Printf("Listening port %s\n", port)
 	err := http.ListenAndServe(port, &WrapHTTPHandler{http.DefaultServeMux})
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
