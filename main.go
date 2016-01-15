@@ -8,6 +8,10 @@ import (
 	"path/filepath"
 )
 
+func init() {
+	log.SetPrefix("[Info]")
+}
+
 // From Jackie Li's answer at https://groups.google.com/forum/#!topic/golang-nuts/_44ehpmFOjU
 type WrapHTTPHandler struct {
 	m http.Handler
@@ -16,7 +20,6 @@ type WrapHTTPHandler struct {
 func (h *WrapHTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	lw := &loggedResponse{ResponseWriter: w, status: 200}
 	h.m.ServeHTTP(lw, r)
-	log.SetPrefix("[Info]")
 	log.Printf("%s %s - %d\n", r.Method, r.URL, lw.status)
 }
 
