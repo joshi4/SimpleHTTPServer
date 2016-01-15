@@ -45,7 +45,7 @@ func simpleHandler(w http.ResponseWriter, req *http.Request, pwd string) {
 }
 
 func main() {
-	port := ":9000"
+	port := ":9090"
 	if len(os.Args) >= 2 {
 		port = fmt.Sprintf(":%s", os.Args[1])
 	}
