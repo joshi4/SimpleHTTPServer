@@ -40,6 +40,11 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 		fn(w, req, pwd)
 	}
 }
+
+func okHandler(rw http.ResponseWriter, req *http.Request) {
+	rw.WriteHeader(200)
+}
+
 func simpleHandler(w http.ResponseWriter, req *http.Request, pwd string) {
 	http.ServeFile(w, req, fmt.Sprintf("%s%s", pwd, req.URL.Path))
 }
@@ -51,6 +56,8 @@ func main() {
 	}
 
 	http.HandleFunc("/", makeHandler(simpleHandler))
+	http.HandleFunc("/healthz", okHandler)
+
 	log.Printf("Listening on port %s\n", port)
 	err := http.ListenAndServe(port, &WrapHTTPHandler{http.DefaultServeMux})
 	if err != nil {
